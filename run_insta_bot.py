@@ -39,6 +39,8 @@ class Run:
                 if unfollow_users == 'Y':
                     for name in list_of_unfollowers['User']:
                         try:
+                            if name in self.myBot.safe_list_df['User'].str.contains(name).any():
+                                continue
                             self.myBot.unfollow(name)
                         except Exception as e:
                             print(e)

@@ -30,12 +30,14 @@ class InstaBot:
         #xpath is for login button 
         self.driver.find_element_by_xpath("/html/body/div[1]/section/main/article/div[2]/div[1]/div/form/div[4]").click()
         #sleep is to let the next page load up
-        time.sleep(3)
+        time.sleep(5)
         #this is the xpath to remove notifications popup  
         e = self.driver.find_element_by_xpath("//button[contains(text(), 'Not Now')]")
         self.driver.execute_script("arguments[0].click();", e)
         #now we sleep to make sure thing are loaded up
         time.sleep(2)
+        e = self.driver.find_element_by_xpath("//button[contains(text(), 'Not Now')]")
+        self.driver.execute_script("arguments[0].click();", e)
 
     #this prints and returns a 
     def get_unfollowers(self):
@@ -53,31 +55,32 @@ class InstaBot:
     def _get_names(self):
         time.sleep(2)
         #this gets the element of the scroll box and stores it into an attribute
-        scroll_box = self.driver.find_element_by_xpath("/html/body/div[4]/div/div[2]")
+        scroll_box = self.driver.find_element_by_xpath("/html/body/div[4]/div")
         #initializing variables
         last_ht, ht = 0, 1
         #last height will refer to the height of the scroll box before the scroll
         #ht refers to the height of the scroll box after the scroll
         #if the script scrolls and the height doesn't change it means we are at the bottom of the scroll box 
         #hence exit condition of last_ht != ht 
-        while last_ht != ht:
-            last_ht = ht
-            time.sleep(2)
-            #this executes a comand in javascript to scrol to the scroll height and return height 
-            ht = self.driver.execute_script("""
-                arguments[0].scrollTo(0, arguments[0].scrollHeight); 
-                return arguments[0].scrollHeight;
-                """, scroll_box)
+        # while last_ht != ht:
+        #     last_ht = ht
+        #     time.sleep(2)
+        #     #this executes a comand in javascript to scrol to the scroll height and return height 
+        #     ht = self.driver.execute_script("""
+        #         arguments[0].scrollTo(0, arguments[0].scrollHeight); 
+        #         return arguments[0].scrollHeight;
+        #         """, scroll_box)
         #gets the names as links    
         links = scroll_box.find_elements_by_tag_name('a')
         #stores the text values as names 
         names = [name.text for name in links if name.text != '']
       
         # This retrieves the close button and clicks it 
-        self.driver.find_element_by_xpath("/html/body/div[4]/div/div[1]/div/div[2]/button")\
+        self.driver.find_element_by_xpath("/html/body/div[4]/div/div/div[1]/div/div[2]/button")\
             .click()
         time.sleep(2)
         return names
+        
     
 
 
