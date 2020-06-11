@@ -1,4 +1,5 @@
 from selenium import webdriver
+from webdriver_manager.chrome import ChromeDriverManager
 import time 
 from datetime import datetime
 import os.path
@@ -13,8 +14,8 @@ class InstaBot:
         #this here is a way to store where our lists will be stored 
         self._path_to_files = "../insta_files/"
         #this is an indicator to whether or not the lists have been updated 
-        self.lists_have_been_updated = True
-        self.driver = webdriver.Chrome()
+        self.lists_have_been_updated = False
+        self.driver = webdriver.Chrome(ChromeDriverManager().install())
         self.username = username
         self.pwd = pwd
         self.backspaces = "\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b\b"
